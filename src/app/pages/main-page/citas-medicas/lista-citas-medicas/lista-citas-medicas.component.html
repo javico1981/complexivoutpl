@@ -1,0 +1,53 @@
+<!-- TABLA PARA LISTAR CITAS MEDICAS -->
+<!-- Main content -->
+    <section class="content">
+          <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Fecha</th>
+                    <th scope="col">Horario</th>
+                    <th scope="col">Médico</th>
+                    <th scope="col">Paciente</th>
+                    <th scope="col">Especialidad</th>
+                    <th scope="col">Estado</th>
+                    <th scope="col">Nota</th>
+                    <th scope="col">Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let citaMedica of citasMedicas; let i = index">
+                    <th scope="row">{{ i + 1 }}</th>
+                    <td>{{citaMedica.fecha}}</td>
+                    <td>{{citaMedica.horario}}</td>
+                    <td>{{citaMedica.medico.nombres}}</td>
+                    <td>{{citaMedica.paciente.nombres}}</td>
+                    <td>{{citaMedica.especialidad.nombre}}</td>
+                    <td>{{citaMedica.estado}}</td>
+                    <td>{{mapCalificacionTitle(citaMedica.calificacion) || 'Sin nota'}}</td>
+                    <td>
+                        <span *ngIf="tipoUsuario === 'empleado'" (click)="removeCitaMedica(citaMedica)" class="btn btn-danger">Borrar</span> &nbsp;
+                        <span *ngIf="tipoUsuario !== 'paciente'" class="btn btn-primary" [routerLink]="['/citas-medicas/crear-cita-medica/'+citaMedica.id]">Editar</span> &nbsp;
+                        <span class="btn btn-danger" [routerLink]="['/citas-medicas/detalle-cita-medica/'+citaMedica.id]">Detalle</span> &nbsp;
+                        <span *ngIf="tipoUsuario === 'paciente' && citaMedica.estado === 'completada'" class="btn btn-primary" 
+                        [swal]="{ 
+                            title: 'Califica la atención en tu cita',
+                            input: 'select',
+                            inputOptions: {
+                                '1': 'Deficiente',
+                                '2': 'Regular',
+                                '3': 'Bueno',
+                                '4': 'Muy bueno',
+                                '5': 'Excelente'
+                            },
+                            inputPlaceholder: 'Seleccione una calificación ',
+                            cancelButtonText: 'Cancelar',
+                            showCancelButton: true 
+                            }"
+                            (confirm)="calificar($event, citaMedica)"
+                        >Calificar</span>
+                    </td>
+                  </tr>
+              </tbody>
+          </table>
+      </section>

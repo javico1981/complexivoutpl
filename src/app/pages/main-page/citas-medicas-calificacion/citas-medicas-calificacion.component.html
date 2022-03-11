@@ -1,0 +1,81 @@
+<!-- componente principal citas medicas -->
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1>Reporte calificación Citas médicas {{isReporteGeneral? 'General': 'Promedio'}}</h1>
+
+          <button class="btn btn-primary" (click)="toggleReporte()">
+            Cambiar reporte
+          </button>
+
+          <button (click)="imprimir()" class="btn btn-primary ml-4">
+            Imprimir
+          </button>
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a [routerLink]="['/']">Inicio</a></li>
+            <li class="breadcrumb-item active">Reporte Citas médicas</li>
+          </ol>
+        </div>
+      </div>
+    </div><!-- /.container-fluid -->
+  </section>
+  <!-- ETIQUE QUE PERMITE LAS RUTAS CONTEDIDO DINAMICO -->
+  <section *ngIf="isReporteGeneral" class="content">
+      <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Fecha</th>
+                <th scope="col">Médico</th>
+                <th scope="col">Paciente</th>
+                <th scope="col">Estado</th>
+                <th scope="col">Nota</th>
+               
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let citaMedica of citasMedicas; let i = index">
+                <th scope="row">{{ i + 1 }}</th>
+                <td>{{citaMedica.fecha}}</td>
+                <td>{{citaMedica.medico.nombres}}</td>
+                <td>{{citaMedica.paciente.nombres}}</td>
+                <td>{{citaMedica.estado}}</td>
+                <td>{{mapCalificacionTitle(citaMedica.calificacion) || 'Sin nota'}}</td>
+              </tr>
+          </tbody>
+      </table>
+  </section>
+  <!-- /.content -->
+
+  <section *ngIf="!isReporteGeneral" class="content">
+    <table class="table">
+      <thead>
+          <tr>
+              <th scope="col">#</th>
+              <th scope="col">Médico</th>
+              <th scope="col"># Pacientes</th>
+              <th scope="col"># Calificaciones</th>
+              <th scope="col">Promedio</th>
+             
+          </tr>
+      </thead>
+      <tbody>
+          <tr *ngFor="let medico of medicosCalificacion; let i = index">
+              <th scope="row">{{ i + 1 }}</th>
+              <td>{{medico.nombres}}</td>
+              <td>{{medico.pacientes}}</td>
+              <td>{{medico.calificaciones.length}}</td>
+              <td>{{medico.promedio}}</td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+</div>
+
+
+

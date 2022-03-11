@@ -1,0 +1,25 @@
+<!-- Tabla para presentar los datos -->
+<!-- Main content -->
+    <section class="content">
+          <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let medico of Medicos; let i = index">
+                    <th scope="row">{{ i + 1 }}</th>
+                    <td>{{medico.nombres}}</td>
+                    <td>{{medico.email}}</td>
+                    <td>
+                        <span (click)="removeMedico(medico)" class="btn btn-danger">Borrar</span> &nbsp;
+                        <span class="btn btn-primary" [routerLink]="['/medicos/crear-medico/'+medico.id]">Editar</span>
+                    </td>
+                  </tr>
+              </tbody>
+          </table>
+      </section>

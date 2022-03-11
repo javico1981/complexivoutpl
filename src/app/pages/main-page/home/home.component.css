@@ -1,0 +1,12 @@
+.container {
+    display: flex;
+    justify-items: center;
+    align-items: flex-start;
+}
+
+.imagen-principal {
+    max-width: 100%;
+    object-fit: cover;
+    object-position: top;
+    height: 300px;
+}
